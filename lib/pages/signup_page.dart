@@ -47,6 +47,7 @@ class _SignupPageState extends State<SignupPage> {
             TextFieldWidget(
               controller: passwordController,
               text: "enter password",
+              isPassword: true,
             ),
             Row(
               mainAxisAlignment:  MainAxisAlignment.center,

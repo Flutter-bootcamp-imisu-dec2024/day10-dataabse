@@ -11,15 +11,25 @@ class Database {
     for (var element in response) {
       studentList.add(Student.fromJson(element));
     }
+    await Future.delayed(const Duration(seconds: 5));
     return studentList;
   }
 
-  insertNewStudent({required String name,required int age,required double salary})async {
+  insertNewStudent(
+      {required String name, required int age, required double salary}) async {
     await supabase.from("student").insert({
       "name": name,
-      "age":age,
+      "age": age,
       "salary": salary,
     });
+  }
+
+  deleteUser({required int id}) async {
+    await supabase.from("student").delete().eq("id", id);
+  }
+
+  updateUser({required String name, required int id, required double salary}) async {
+    await supabase.from("student").update({"name":name,"salary":salary}).eq("id", id);
   }
 
 // =============  for auth table =====================================
@@ -29,15 +39,5 @@ class Database {
 
   login({required String email, required String password}) async {
     await supabase.auth.signInWithPassword(password: password, email: email);
-  } 
+  }
 }
-
-
-
-
-
-
-
-
-
-

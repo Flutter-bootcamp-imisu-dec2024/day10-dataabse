@@ -1,8 +1,10 @@
 import 'package:day10_database/constants/spacing.dart';
+import 'package:day10_database/model/student.dart';
 import 'package:day10_database/services/database.dart';
 import 'package:day10_database/widgets/card_widget.dart';
 import 'package:day10_database/widgets/text_field_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class ListPage extends StatefulWidget {
   const ListPage({super.key});
@@ -21,6 +23,10 @@ class ListPageState extends State<ListPage> {
     ageController.clear();
     salaryController.clear();
   }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +41,15 @@ class ListPageState extends State<ListPage> {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                var item = snapshot.data![index];
+                Student item = snapshot.data![index];
                 return CardWidget(
-                  age: item.age,
-                  id: item.id,
-                  name: item.name,
-                  salary: item.salary,
+                  student: item,
                 );
               },
             );
           } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return  Center(
+              child: LoadingAnimationWidget.flickr(leftDotColor: Colors.purple, rightDotColor: Colors.blue, size: 48),
             );
           } else {
             return const Center(
